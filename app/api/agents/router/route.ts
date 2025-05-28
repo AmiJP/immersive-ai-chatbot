@@ -5,7 +5,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI, FunctionCallingConfigMode, FunctionDeclaration, Type } from '@google/genai';
 
-const ai = new GoogleGenAI({apiKey: 'AIzaSyBBeAstnUAEsseCitjgf41waum-l8spEvk'});
+// Get API key from environment variable
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+if (!GEMINI_API_KEY) {
+  console.error('GEMINI_API_KEY environment variable is not set');
+}
+
+const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY || ''});
 
 // Helper function to extract valid JSON from a string that might contain extra text
 function extractJsonFromString(str: string, defaultJson: any): any {
